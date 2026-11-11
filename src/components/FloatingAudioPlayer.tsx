@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Volume2, Pause, RotateCcw } from 'lucide-react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { Volume2, Play, Pause, RotateCcw, X } from 'lucide-react';
 
 interface FloatingAudioPlayerProps {
   visible: boolean;
@@ -10,24 +10,23 @@ interface FloatingAudioPlayerProps {
 export const FloatingAudioPlayer: React.FC<FloatingAudioPlayerProps> = ({
   visible,
   audioSrc = '/audio/voice-thu-ngo.wav',
-  onNotify,
+  onNotify: _onNotify,
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [progress, setProgress] = useState(0);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isEnded, setIsEnded] = useState(false);
+
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const progressBarRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
     const handleTimeUpdate = () => {
-      if (audio.duration) {
-        setProgress((audio.currentTime / audio.duration) * 100);
-        setCurrentTime(audio.currentTime);
-      }
+      setCurrentTime(audio.currentTime);
     };
 
     const handleLoadedMetadata = () => {
@@ -37,8 +36,6 @@ export const FloatingAudioPlayer: React.FC<FloatingAudioPlayerProps> = ({
     const handleEnded = () => {
       setIsPlaying(false);
       setIsEnded(true);
-      setProgress(100);
-      if (onNotify) onNotify('Đã phát xong bản đọc thư ngỏ.');
     };
 
     const handlePause = () => {
@@ -63,7 +60,7 @@ export const FloatingAudioPlayer: React.FC<FloatingAudioPlayerProps> = ({
       audio.removeEventListener('pause', handlePause);
       audio.removeEventListener('play', handlePlay);
     };
-  }, [onNotify]);
+  }, []);
 
   // Pause audio if user returns to cover
   useEffect(() => {
@@ -72,19 +69,18 @@ export const FloatingAudioPlayer: React.FC<FloatingAudioPlayerProps> = ({
     }
   }, [visible, isPlaying]);
 
-  if (!visible) return null;
-
   const togglePlay = async () => {
     const audio = audioRef.current;
     if (!audio) return;
 
     try {
+      setIsExpanded(true);
+
       if (isEnded) {
         audio.currentTime = 0;
         setIsEnded(false);
         await audio.play();
         setIsPlaying(true);
-        if (onNotify) onNotify('Đang phát lại bản đọc thư ngỏ...');
         return;
       }
 
@@ -94,90 +90,137 @@ export const FloatingAudioPlayer: React.FC<FloatingAudioPlayerProps> = ({
       } else {
         await audio.play();
         setIsPlaying(true);
-        if (onNotify) onNotify('Đang phát bản đọc thư ngỏ...');
       }
     } catch (err) {
       console.warn('Playback error:', err);
     }
   };
 
-  const formatTime = (secs: number) => {
+  const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
+    const bar = progressBarRef.current;
+    const audio = audioRef.current;
+    if (!bar || !audio || !duration) return;
+
+    const rect = bar.getBoundingClientRect();
+    const clickX = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+    const newRatio = clickX / rect.width;
+    audio.currentTime = newRatio * duration;
+    setCurrentTime(audio.currentTime);
+  };
+
+  const handleTouchSeek = (e: React.TouchEvent<HTMLDivElement>) => {
+    const bar = progressBarRef.current;
+    const audio = audioRef.current;
+    if (!bar || !audio || !duration || !e.touches[0]) return;
+
+    const rect = bar.getBoundingClientRect();
+    const touchX = Math.max(0, Math.min(e.touches[0].clientX - rect.left, rect.width));
+    const newRatio = touchX / rect.width;
+    audio.currentTime = newRatio * duration;
+    setCurrentTime(audio.currentTime);
+  };
+
+  const formatTime = useCallback((secs: number) => {
+    if (isNaN(secs) || secs < 0) return '0:00';
     const m = Math.floor(secs / 60);
     const s = Math.floor(secs % 60);
     return `${m}:${s < 10 ? '0' : ''}${s}`;
-  };
+  }, []);
+
+  if (!visible) return null;
+
+  const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   return (
-    <aside
+    <div
       aria-label="Trình phát âm thanh đọc thư ngỏ"
-      className="fixed bottom-4 left-3.5 sm:bottom-6 sm:left-6 z-40 print:hidden transition-all duration-300 animate-in fade-in slide-in-from-bottom-2 select-none"
+      className="transition-all duration-300 animate-in fade-in select-none"
     >
       {/* Hidden native audio tag */}
       <audio ref={audioRef} src={audioSrc} preload="metadata" />
 
-      {/* Floating Audio Capsule Pill */}
-      <button
-        type="button"
-        onClick={togglePlay}
-        className={`group relative overflow-hidden flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2.5 rounded-full border shadow-xl transition-all duration-200 active:scale-95 cursor-pointer focus-visible:ring-2 focus-visible:ring-white ${
-          isPlaying
-            ? 'bg-gradient-to-r from-[#9B1220] via-[#B8192D] to-[#9B1220] text-white border-gold-300 shadow-gold-500/20'
-            : 'bg-red-950/95 hover:bg-red-900 text-gold-300 hover:text-white border-gold-500/60 shadow-black/40'
-        }`}
-        aria-label={
-          isEnded
-            ? 'Nghe lại bản đọc thư ngỏ'
-            : isPlaying
-            ? 'Tạm dừng bản đọc thư ngỏ'
-            : 'Nghe giọng đọc thư ngỏ'
-        }
-        title={
-          isEnded
-            ? 'Nghe lại bản đọc thư'
-            : isPlaying
-            ? 'Tạm dừng bản đọc'
-            : 'Nghe giọng đọc thư ngỏ'
-        }
-      >
-        {/* Animated equalizer waves when playing */}
-        {isPlaying ? (
-          <div className="flex items-center gap-1 shrink-0 text-white">
-            <Pause className="w-4 h-4 fill-current" aria-hidden="true" />
-            <div className="flex items-end gap-[2px] h-3.5 w-3 mx-0.5 pb-0.5" aria-hidden="true">
-              <span className="w-[2.5px] bg-gold-300 rounded-full animate-audio-bar-1" />
-              <span className="w-[2.5px] bg-gold-200 rounded-full animate-audio-bar-2" />
-              <span className="w-[2.5px] bg-gold-300 rounded-full animate-audio-bar-3" />
+      {!isExpanded ? (
+        /* Trạng thái ban đầu: Nút bấm gọn gàng "Đọc thư" cùng style và hạ độ cao */
+        <button
+          type="button"
+          onClick={togglePlay}
+          className="group relative overflow-hidden flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-[#B8192D] via-[#D32338] to-[#A31425] text-white border border-gold-300/80 shadow-xl shadow-red-950/30 transition-all duration-200 active:scale-95 cursor-pointer hover:brightness-105 focus-visible:ring-2 focus-visible:ring-gold-300"
+          aria-label="Bắt đầu nghe đọc thư ngỏ"
+          title="Bắt đầu nghe đọc thư ngỏ"
+        >
+          {/* Nút icon tròn nền cùng màu trang nội dung (#FFFCF4) */}
+          <div className="relative flex items-center justify-center shrink-0 w-5 h-5 rounded-full bg-[#FFFCF4] text-[#B8192D] shadow-sm">
+            <Volume2 className="w-3.5 h-3.5" aria-hidden="true" />
+            <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping opacity-75" />
+          </div>
+          <span className="font-serif text-xs sm:text-sm font-semibold tracking-wide text-white drop-shadow-sm">
+            Đọc thư
+          </span>
+        </button>
+      ) : (
+        /* Trạng thái mở: Thanh tiến trình Audio Player màu đỏ tươi, chiều cao gọn gàng */
+        <div
+          className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-[#B8192D] via-[#D32338] to-[#A31425] text-white border border-gold-300/90 shadow-2xl shadow-red-950/40 backdrop-blur-md animate-in zoom-in-95 duration-200"
+          role="region"
+          aria-label="Bộ điều khiển thanh tiến trình âm thanh"
+        >
+          {/* Nút Play / Pause / Replay: Nền cùng màu trang nội dung (#FFFCF4), icon màu đỏ tươi */}
+          <button
+            type="button"
+            onClick={togglePlay}
+            className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#FFFCF4] hover:bg-white text-[#B8192D] border border-amber-200/80 flex items-center justify-center shrink-0 shadow-md transition-transform active:scale-90 cursor-pointer"
+            aria-label={isEnded ? 'Phát lại' : isPlaying ? 'Tạm dừng' : 'Tiếp tục phát'}
+            title={isEnded ? 'Phát lại' : isPlaying ? 'Tạm dừng' : 'Tiếp tục phát'}
+          >
+            {isEnded ? (
+              <RotateCcw className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2.5]" aria-hidden="true" />
+            ) : isPlaying ? (
+              <Pause className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-current" aria-hidden="true" />
+            ) : (
+              <Play className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-current ml-0.5" aria-hidden="true" />
+            )}
+          </button>
+
+          {/* Thời gian hiện tại */}
+          <span className="text-[10.5px] sm:text-[11px] font-mono font-medium text-gold-100 min-w-[26px] text-right drop-shadow-sm">
+            {formatTime(currentTime)}
+          </span>
+
+          {/* Thanh tiến trình có thể bấm để tua (Interactive Progress Bar) */}
+          <div
+            ref={progressBarRef}
+            onClick={handleSeek}
+            onTouchStart={handleTouchSeek}
+            onTouchMove={handleTouchSeek}
+            className="relative w-20 sm:w-32 h-1.5 bg-black/30 border border-gold-300/40 rounded-full cursor-pointer flex items-center"
+            title="Bấm để tua đoạn đọc"
+          >
+            <div
+              className="h-full bg-gradient-to-r from-gold-300 via-white to-gold-300 rounded-full relative transition-all duration-75"
+              style={{ width: `${progressPercent}%` }}
+            >
+              {/* Nút chỉ báo tiến trình tròn nhỏ */}
+              <span className="absolute right-0 top-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-white rounded-full shadow-sm shadow-black/40 border border-gold-400" />
             </div>
           </div>
-        ) : isEnded ? (
-          <RotateCcw className="w-4 h-4 text-gold-300 shrink-0" aria-hidden="true" />
-        ) : (
-          <div className="relative flex items-center justify-center shrink-0">
-            <Volume2 className="w-4 h-4 text-gold-300 shrink-0" aria-hidden="true" />
-            <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-gold-400 animate-ping opacity-75" />
-          </div>
-        )}
 
-        {/* Text and Time Status */}
-        <div className="flex items-baseline gap-1.5 text-xs sm:text-sm font-semibold tracking-wide">
-          <span className="font-serif">
-            {isEnded ? 'Nghe lại thư' : isPlaying ? 'Đang đọc' : 'Nghe đọc thư'}
+          {/* Thời lượng tổng */}
+          <span className="text-[10.5px] sm:text-[11px] font-mono font-medium text-gold-200/90 min-w-[26px] drop-shadow-sm">
+            {formatTime(duration)}
           </span>
-          {duration > 0 && (
-            <span className="text-[10px] text-gold-300/80 font-mono font-normal">
-              {isPlaying ? formatTime(currentTime) : formatTime(duration)}
-            </span>
-          )}
-        </div>
 
-        {/* Bottom progress bar */}
-        {duration > 0 && (
-          <div
-            className="absolute bottom-0 left-0 h-[2.5px] bg-gradient-to-r from-gold-400 via-gold-200 to-gold-400 transition-all duration-150"
-            style={{ width: `${progress}%` }}
-          />
-        )}
-      </button>
-    </aside>
+          {/* Nút thu nhỏ lại */}
+          <button
+            type="button"
+            onClick={() => setIsExpanded(false)}
+            className="p-0.5 rounded-full text-gold-200/80 hover:text-white hover:bg-white/15 transition-colors cursor-pointer"
+            aria-label="Thu nhỏ thanh phát"
+            title="Thu nhỏ"
+          >
+            <X className="w-3.5 h-3.5" aria-hidden="true" />
+          </button>
+        </div>
+      )}
+    </div>
   );
 };

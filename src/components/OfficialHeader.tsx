@@ -29,22 +29,34 @@ export const OfficialHeader: React.FC<OfficialHeaderProps> = ({
       <div
         className={`font-sans font-bold tracking-wider uppercase transition-colors ${
           isCover
-            ? 'text-xs sm:text-sm md:text-base text-[#FFF2CC]'
+            ? 'text-xs sm:text-sm md:text-[14.5px] text-[#FFF2CC]'
             : 'text-xs sm:text-sm md:text-sm text-ink-900'
         }`}
       >
-        <p className="leading-snug">
-          {letterContent.authorityLines.join(' - ')}
-        </p>
+        {isCover ? (
+          <p className="leading-snug">
+            <span className="inline-block whitespace-nowrap">ĐẢNG ỦY - HĐND - UBND</span>
+            <span className="hidden min-[520px]:inline"> - </span>
+            <span className="inline-block whitespace-nowrap min-[520px]:inline">ỦY BAN MTTQ VIỆT NAM</span>
+          </p>
+        ) : (
+          <p className="leading-snug">
+            {letterContent.authorityLines.join(' - ')}
+          </p>
+        )}
       </div>
 
-      {/* Province */}
+      {/* Location / Province line: Xã Minh Thái ngang hàng và cùng style với Tỉnh Ninh Bình */}
       <div
         className={`mt-1 font-sans font-semibold tracking-widest text-[11px] sm:text-xs uppercase ${
           isCover ? 'text-[#FFE4A0] font-medium' : 'text-ink-700'
         }`}
       >
-        {letterContent.province}
+        {isCover ? (
+          <span>XÃ MINH THÁI - TỈNH NINH BÌNH</span>
+        ) : (
+          letterContent.province
+        )}
       </div>
 
       {/* Delicate ornamental divider */}

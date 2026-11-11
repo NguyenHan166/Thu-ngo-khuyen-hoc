@@ -96,18 +96,24 @@ export function App() {
         />
       )}
 
-      {/* Floating Audio Player Button to listen to letter voice */}
-      <FloatingAudioPlayer
-        visible={state === 'reading'}
-        audioSrc="/audio/voice-thu-ngo.wav"
-        onNotify={showToast}
-      />
-
-      {/* Floating Shortcut to Donation Block */}
-      <FloatingSupportAction
-        visible={state === 'reading'}
-        targetId="ung-ho"
-      />
+      {/* Floating Action Buttons: Thông tin ủng hộ & Đọc thư */}
+      {state === 'reading' && (
+        <aside
+          aria-label="Tiện ích hỗ trợ và đọc thư"
+          className="fixed bottom-3.5 left-3 sm:bottom-5 sm:left-5 z-40 print:hidden flex flex-col items-start gap-1.5 select-none pointer-events-none [&>*]:pointer-events-auto"
+        >
+          {/* Nút Thông tin ủng hộ nằm bên trên */}
+          <FloatingSupportAction
+            visible={state === 'reading'}
+            targetId="ung-ho"
+          />
+          {/* Nút Đọc thư / Thanh audio nằm bên dưới */}
+          <FloatingAudioPlayer
+            visible={state === 'reading'}
+            audioSrc="/audio/voice-thu-ngo.wav"
+          />
+        </aside>
+      )}
 
       {/* Accessible Polite Status Notification Toast */}
       <AccessibleToast
