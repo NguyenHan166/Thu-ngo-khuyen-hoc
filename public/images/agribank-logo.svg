@@ -1,0 +1,11 @@
+<svg viewBox="0 0 160 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(4, 3)">
+    <rect x="18" y="0" width="25" height="25" rx="3" transform="rotate(45 18 0)" fill="#8B141C"/>
+    <path d="M18 4.5 L29 15.5 L18 26.5 L7 15.5 Z" fill="#006837"/>
+    <path d="M18 8 L25.5 15.5 L18 23 L10.5 15.5 Z" fill="#F6B426"/>
+    <path d="M18 11.5 L22 15.5 L18 19.5 L14 15.5 Z" fill="#8B141C"/>
+    <circle cx="18" cy="15.5" r="1.5" fill="#FFFFFF"/>
+  </g>
+  <text x="44" y="23" font-family="'Arial', sans-serif" font-weight="800" font-size="17.5" letter-spacing="0.8" fill="#8B141C">AGRIBANK</text>
+  <text x="44.5" y="34" font-family="'Arial', sans-serif" font-weight="600" font-size="6.8" letter-spacing="0.2" fill="#006837">NGÂN HÀNG NÔNG NGHIỆP &amp; PTNT VIỆT NAM</text>
+</svg>

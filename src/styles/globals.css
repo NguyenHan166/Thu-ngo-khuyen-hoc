@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --red-950: #4C0810;
+    --red-900: #710C18;
+    --red-800: #931625;
+    --red-700: #B12332;
+    --gold-700: #9B6B22;
+    --gold-500: #C99D4B;
+    --gold-300: #F1D58C;
+    --gold-glow: #FFD979;
+    --paper-50: #FFFCF4;
+    --paper-100: #F8F0DF;
+    --ink-900: #263343;
+    --ink-700: #34547A;
+    --line-gold: #D8BD81;
+    --focus: #1976D2;
+  }
+
+  html {
+    font-family: 'Be Vietnam Pro', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+
+  /* Focus visible accessibility styling */
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+  }
+}
+
+/* Subtle breathing glow for cover book backdrop */
+@keyframes breathingGlow {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(0.98);
+  }
+  50% {
+    opacity: 0.65;
+    transform: scale(1.04);
+  }
+}
+
+.animate-breathing-glow {
+  animation: breathingGlow 8s ease-in-out infinite;
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-breathing-glow {
+    animation: none !important;
+    opacity: 0.5 !important;
+  }
+}
+
+/* Paper texture and subtle decorative motifs */
+.paper-pattern {
+  background-color: #FFFCF4;
+  background-image: 
+    radial-gradient(#C99D4B 0.5px, transparent 0.5px), 
+    linear-gradient(to bottom, rgba(255, 252, 244, 0.98), rgba(248, 240, 223, 0.98));
+  background-size: 24px 24px, 100% 100%;
+}
+
+/* Elegant gold inner border */
+.gold-double-border {
+  border: 1px solid rgba(201, 157, 75, 0.35);
+  box-shadow: inset 0 0 0 3px rgba(255, 252, 244, 0.8), inset 0 0 0 4px rgba(201, 157, 75, 0.25);
+}
+
+/* Print styles for export or physical archival */
+@media print {
+  body {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-page {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+  }
+}
