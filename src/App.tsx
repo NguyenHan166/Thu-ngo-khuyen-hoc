@@ -3,6 +3,7 @@ import { DecorativeBackdrop } from './components/DecorativeBackdrop';
 import { CoverScene } from './components/CoverScene';
 import { LetterScene } from './components/LetterScene';
 import { FloatingSupportAction } from './components/FloatingSupportAction';
+import { FloatingAudioPlayer } from './components/FloatingAudioPlayer';
 import { AccessibleToast } from './components/AccessibleToast';
 
 type AppState = 'cover' | 'reading';
@@ -94,6 +95,13 @@ export function App() {
           onNotify={showToast}
         />
       )}
+
+      {/* Floating Audio Player Button to listen to letter voice */}
+      <FloatingAudioPlayer
+        visible={state === 'reading'}
+        audioSrc="/audio/voice-thu-ngo.wav"
+        onNotify={showToast}
+      />
 
       {/* Floating Shortcut to Donation Block */}
       <FloatingSupportAction

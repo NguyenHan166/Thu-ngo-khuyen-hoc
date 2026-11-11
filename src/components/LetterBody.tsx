@@ -35,9 +35,9 @@ export const LetterBody: React.FC<LetterBodyProps> = ({ className = '' }) => {
 
   return (
     <article className={`max-w-[68ch] mx-auto text-ink-900 ${className}`}>
-      {/* Salutation / Kính gửi */}
-      <div className="mb-3 pb-0.5 text-left">
-        <p className="book-page-line text-[14.5px] sm:text-[15px] md:text-[15.5px] text-ink-900 font-normal">
+      {/* Salutation / Kính gửi - Justified like Microsoft Word */}
+      <div className="mb-3 pb-0.5 text-justify [text-align-last:left] [text-justify:inter-word]">
+        <p className="book-page-line text-[14.5px] sm:text-[15px] md:text-[15.5px] text-ink-900 font-normal text-justify [text-align-last:left] [text-justify:inter-word]">
           <strong className="font-semibold text-red-900 font-serif">Kính gửi:</strong>{' '}
           <span className="font-normal">
             {letterContent.salutation.replace(/^Kính gửi:\s*/i, '')}
@@ -45,12 +45,12 @@ export const LetterBody: React.FC<LetterBodyProps> = ({ className = '' }) => {
         </p>
       </div>
 
-      {/* 4 Paragraphs from official Word source with book ruling lines */}
-      <div className="space-y-3.5 text-justify sm:text-left">
+      {/* 4 Paragraphs from official Word source - Căn đều 2 lề như Word */}
+      <div className="space-y-3.5 text-justify [text-align-last:left] [text-justify:inter-word]">
         {letterContent.paragraphs.map((p, idx) => (
           <p
             key={idx}
-            className="book-page-line text-[14.5px] sm:text-[15px] md:text-[15.5px] text-ink-900 font-normal tracking-normal text-left indent-5 sm:indent-7"
+            className="book-page-line text-[14.5px] sm:text-[15px] md:text-[15.5px] text-ink-900 font-normal tracking-normal text-justify [text-align-last:left] [text-justify:inter-word] indent-6 sm:indent-8"
           >
             {renderParagraphWithHighlight(p)}
           </p>

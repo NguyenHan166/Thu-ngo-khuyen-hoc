@@ -48,12 +48,12 @@ export const FloatingSupportAction: React.FC<FloatingSupportActionProps> = ({
   return (
     <aside
       aria-label="Lối tắt cuộn đến thông tin ủng hộ"
-      className="fixed bottom-6 right-6 z-40 print:hidden transition-all duration-300 animate-in fade-in slide-in-from-bottom-2"
+      className="fixed bottom-4 right-3.5 sm:bottom-6 sm:right-6 z-40 print:hidden transition-all duration-300 animate-in fade-in slide-in-from-bottom-2"
     >
       <button
         type="button"
         onClick={scrollToSupport}
-        className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-red-900/95 hover:bg-red-800 text-gold-300 hover:text-white border border-gold-500/50 shadow-lg hover:shadow-xl text-xs sm:text-sm font-semibold transition-all active:scale-95 focus-visible:ring-2 focus-visible:ring-gold-500 cursor-pointer"
+        className="flex items-center gap-1.5 sm:gap-2 px-3 py-2 sm:px-4 sm:py-2.5 rounded-full bg-red-900/95 hover:bg-red-800 text-gold-300 hover:text-white border border-gold-500/50 shadow-lg hover:shadow-xl text-xs sm:text-sm font-semibold transition-all active:scale-95 focus-visible:ring-2 focus-visible:ring-gold-500 cursor-pointer"
         title="Cuộn nhanh tới phần thông tin ủng hộ"
       >
         <HeartHandshake className="w-4 h-4 text-gold-300" aria-hidden="true" />
