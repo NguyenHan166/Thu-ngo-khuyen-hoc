@@ -7,10 +7,10 @@ export const DecorativeBackdrop: React.FC = () => {
       className="fixed inset-0 pointer-events-none select-none overflow-hidden z-0"
     >
       {/* Vibrant velvet crimson red gradient layers */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#6B0D18] via-[#8E1423] to-[#5C0A14] opacity-95" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#7A0D1B] via-[#9E1626] to-[#690915] opacity-95" />
 
       {/* Radiant warm gold ambient glow in center */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/4 w-[900px] h-[700px] bg-[radial-gradient(circle,rgba(255,217,121,0.22)_0%,rgba(201,157,75,0.08)_45%,rgba(142,20,35,0)_70%)] animate-breathing-glow" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/4 w-[900px] h-[700px] bg-[radial-gradient(circle,rgba(255,217,121,0.25)_0%,rgba(201,157,75,0.1)_45%,rgba(158,22,38,0)_70%)] animate-breathing-glow" />
 
       {/* Subtle traditional diamond pattern overlay */}
       <svg

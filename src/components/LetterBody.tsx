@@ -36,8 +36,8 @@ export const LetterBody: React.FC<LetterBodyProps> = ({ className = '' }) => {
   return (
     <article className={`max-w-[68ch] mx-auto text-ink-900 ${className}`}>
       {/* Salutation / Kính gửi */}
-      <div className="mb-3.5 pb-1 text-left">
-        <p className="text-[14.5px] sm:text-[15.5px] md:text-[16px] leading-[1.62] text-ink-900">
+      <div className="mb-3 pb-0.5 text-left">
+        <p className="book-page-line text-[14.5px] sm:text-[15px] md:text-[15.5px] text-ink-900 font-normal">
           <strong className="font-semibold text-red-900 font-serif">Kính gửi:</strong>{' '}
           <span className="font-normal">
             {letterContent.salutation.replace(/^Kính gửi:\s*/i, '')}
@@ -45,12 +45,12 @@ export const LetterBody: React.FC<LetterBodyProps> = ({ className = '' }) => {
         </p>
       </div>
 
-      {/* 4 Paragraphs from official Word source */}
-      <div className="space-y-3 sm:space-y-3.5 text-justify sm:text-left">
+      {/* 4 Paragraphs from official Word source with book ruling lines */}
+      <div className="space-y-3.5 text-justify sm:text-left">
         {letterContent.paragraphs.map((p, idx) => (
           <p
             key={idx}
-            className="text-[14.5px] sm:text-[15.5px] md:text-[16px] leading-[1.65] sm:leading-[1.7] text-ink-900 font-normal tracking-normal text-left indent-5 sm:indent-7"
+            className="book-page-line text-[14.5px] sm:text-[15px] md:text-[15.5px] text-ink-900 font-normal tracking-normal text-left indent-5 sm:indent-7"
           >
             {renderParagraphWithHighlight(p)}
           </p>

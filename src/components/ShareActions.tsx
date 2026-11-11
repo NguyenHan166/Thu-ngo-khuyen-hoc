@@ -78,7 +78,7 @@ export const ShareActions: React.FC<ShareActionsProps> = ({
         </button>
       </div>
 
-      <p className="text-center text-[11px] sm:text-xs text-ink-700/70 mt-4 font-serif italic">
+      <p className="text-center text-[11.5px] sm:text-xs text-[#8B6220] font-medium mt-4 font-serif italic">
         Trân trọng cảm ơn sự đồng hành và tấm lòng vàng của Quý vị đối với thế hệ tương lai quê hương Minh Thái.
       </p>
     </div>

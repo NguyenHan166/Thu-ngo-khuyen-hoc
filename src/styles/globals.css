@@ -51,6 +51,24 @@
   animation: breathingGlow 8s ease-in-out infinite;
 }
 
+/* Light beam sweep across button */
+@keyframes lightSweep {
+  0% {
+    transform: translateX(-160%) skewX(-25deg);
+  }
+  45%, 100% {
+    transform: translateX(320%) skewX(-25deg);
+  }
+}
+
+.animate-light-sweep {
+  animation: lightSweep 2s ease-in-out infinite;
+}
+
+.group:hover .animate-light-sweep {
+  animation-duration: 1s;
+}
+
 /* Reduced motion accessibility */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
@@ -65,13 +83,22 @@
   }
 }
 
-/* Paper texture and subtle decorative motifs */
+/* Clean parchment paper without any dot patterns */
 .paper-pattern {
   background-color: #FFFCF4;
-  background-image: 
-    radial-gradient(#C99D4B 0.5px, transparent 0.5px), 
-    linear-gradient(to bottom, rgba(255, 252, 244, 0.98), rgba(248, 240, 223, 0.98));
-  background-size: 24px 24px, 100% 100%;
+  background-image: linear-gradient(to bottom, #FFFCF4 0%, #FAF3E6 100%);
+}
+
+/* Trang sách có dòng kẻ nhạt thanh nhã */
+.book-page-line {
+  background-image: linear-gradient(
+    to bottom,
+    transparent 30px,
+    rgba(201, 157, 75, 0.22) 31px,
+    transparent 31.5px
+  );
+  background-size: 100% 31px;
+  line-height: 31px;
 }
 
 /* Elegant gold inner border */

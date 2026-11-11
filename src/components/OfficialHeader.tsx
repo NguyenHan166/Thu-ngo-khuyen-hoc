@@ -16,9 +16,9 @@ export const OfficialHeader: React.FC<OfficialHeaderProps> = ({
     <header className={`text-center select-none ${className}`}>
       {/* Slogan pill if on cover */}
       {isCover && (
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 mb-3 rounded-full border border-gold-500/40 bg-red-950/60 shadow-sm backdrop-blur-[2px]">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 mb-3 rounded-full border border-gold-300/50 bg-black/25 shadow-sm backdrop-blur-[2px]">
           <span className="w-1.5 h-1.5 rounded-full bg-gold-300 animate-pulse" />
-          <span className="font-serif italic text-xs sm:text-sm tracking-wide text-gold-300">
+          <span className="font-serif italic text-xs sm:text-sm tracking-wide text-[#FFF3D6] font-medium">
             {letterContent.motto}
           </span>
           <span className="w-1.5 h-1.5 rounded-full bg-gold-300 animate-pulse" />
@@ -29,7 +29,7 @@ export const OfficialHeader: React.FC<OfficialHeaderProps> = ({
       <div
         className={`font-sans font-bold tracking-wider uppercase transition-colors ${
           isCover
-            ? 'text-xs sm:text-sm md:text-base text-gold-300'
+            ? 'text-xs sm:text-sm md:text-base text-[#FFF2CC]'
             : 'text-xs sm:text-sm md:text-sm text-ink-900'
         }`}
       >
@@ -41,7 +41,7 @@ export const OfficialHeader: React.FC<OfficialHeaderProps> = ({
       {/* Province */}
       <div
         className={`mt-1 font-sans font-semibold tracking-widest text-[11px] sm:text-xs uppercase ${
-          isCover ? 'text-gold-300/80' : 'text-ink-700'
+          isCover ? 'text-[#FFE4A0] font-medium' : 'text-ink-700'
         }`}
       >
         {letterContent.province}

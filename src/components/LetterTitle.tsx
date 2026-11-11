@@ -40,9 +40,6 @@ export const LetterTitle: React.FC<LetterTitleProps> = ({ className = '' }) => {
         <span className="inline-block whitespace-nowrap">QUỸ KHUYẾN HỌC</span>{' '}
         <span className="inline-block whitespace-nowrap">XÃ MINH THÁI</span>
       </h2>
-
-      {/* Underline ornament */}
-      <div className="w-20 h-[2px] bg-gradient-to-r from-transparent via-gold-500 to-transparent mx-auto mt-2.5 rounded-full" />
     </div>
   );
 };
