@@ -47,9 +47,10 @@ export const CoverScene: React.FC<CoverSceneProps> = ({
           {letterContent.subTitle}
         </p>
 
-        {/* Fund Name */}
+        {/* Fund Name - Responsive: Single line on wide, breaks cleanly before "Xã Minh Thái" on narrow */}
         <h2 className="font-serif font-bold text-2xl sm:text-3xl md:text-[34px] text-gold-glow tracking-wide uppercase px-2 leading-tight drop-shadow">
-          {letterContent.fundName}
+          <span className="inline-block whitespace-nowrap">QUỸ KHUYẾN HỌC</span>{' '}
+          <span className="inline-block whitespace-nowrap">XÃ MINH THÁI</span>
         </h2>
 
         {/* Sub-motto */}

@@ -37,7 +37,8 @@ export const LetterTitle: React.FC<LetterTitleProps> = ({ className = '' }) => {
 
       {/* Fund Name */}
       <h2 className="font-serif font-bold text-lg sm:text-xl md:text-2xl text-red-950 uppercase tracking-wide px-2 max-w-2xl mx-auto leading-snug">
-        {letterContent.fundName}
+        <span className="inline-block whitespace-nowrap">QUỸ KHUYẾN HỌC</span>{' '}
+        <span className="inline-block whitespace-nowrap">XÃ MINH THÁI</span>
       </h2>
 
       {/* Underline ornament */}
