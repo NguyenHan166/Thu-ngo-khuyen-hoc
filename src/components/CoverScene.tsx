@@ -30,7 +30,7 @@ export const CoverScene: React.FC<CoverSceneProps> = ({
 
       {/* Decorative Book/Cover Card Container */}
       <div
-        className="relative z-10 w-full max-w-[650px] bg-gradient-to-b from-[#B8192D]/90 via-[#941120]/92 to-[#A31425]/94 backdrop-blur-sm border-2 border-[#E5B85C]/85 rounded-3xl p-5 sm:p-8 md:p-10 shadow-2xl shadow-black/60 text-center transition-all duration-300 scale-100 opacity-100"
+        className="relative z-10 w-full max-w-[650px] my-auto bg-gradient-to-b from-[#B8192D]/90 via-[#941120]/92 to-[#A31425]/94 backdrop-blur-sm border-2 border-[#E5B85C]/85 rounded-3xl p-5 sm:p-8 md:p-10 shadow-2xl shadow-black/60 text-center transition-all duration-300 scale-100 opacity-100"
       >
         {/* Inner thin gold decorative line */}
         <div className="absolute inset-2 sm:inset-2.5 border border-gold-300/40 rounded-2xl pointer-events-none" />
@@ -101,6 +101,13 @@ export const CoverScene: React.FC<CoverSceneProps> = ({
           Nhấn &ldquo;Mở thư ngỏ&rdquo; để đọc toàn bộ nội dung thư
         </p>
       </div>
+
+      {/* Creator attribution at the bottom of the screen viewport */}
+      <footer className="relative z-10 w-full text-center pt-2 pb-1.5 sm:pb-2.5 mt-auto select-none">
+        <p className="text-[11.5px] sm:text-xs text-[#FFF3D6]/50 tracking-wider font-sans">
+          Made by @nguyenhan
+        </p>
+      </footer>
     </section>
   );
 };

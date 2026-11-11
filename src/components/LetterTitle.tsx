@@ -10,13 +10,6 @@ interface LetterTitleProps {
 export const LetterTitle: React.FC<LetterTitleProps> = ({ className = '' }) => {
   return (
     <div className={`text-center pt-1 sm:pt-2 pb-1 ${className}`}>
-      {/* Top Banner: Motto */}
-      <div className="inline-flex items-center justify-center gap-2 px-3.5 py-1 mb-2.5 rounded-full bg-red-900/10 border border-gold-500/30 text-red-900 shadow-sm">
-        <span className="font-serif italic text-xs sm:text-sm font-semibold tracking-wide text-red-900">
-          {letterContent.motto}
-        </span>
-      </div>
-
       {/* Official Authorities */}
       <OfficialHeader variant="letter" className="mb-3" />
 

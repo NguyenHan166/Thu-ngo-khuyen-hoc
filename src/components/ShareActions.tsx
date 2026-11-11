@@ -81,6 +81,11 @@ export const ShareActions: React.FC<ShareActionsProps> = ({
       <p className="text-center text-[11.5px] sm:text-xs text-[#8B6220] font-medium mt-4 font-serif italic">
         Trân trọng cảm ơn sự đồng hành và tấm lòng vàng của Quý vị đối với thế hệ tương lai quê hương Minh Thái.
       </p>
+
+      {/* Creator attribution */}
+      <p className="text-center text-[11px] text-ink-700/40 tracking-wider font-sans mt-3 select-none">
+        Made by @nguyenhan
+      </p>
     </div>
   );
 };
